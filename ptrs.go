@@ -1,6 +1,9 @@
 package util
 
-import "time"
+import (
+	"github.com/go-openapi/strfmt"
+	"time"
+)
 
 // StringPtr return pointer to string s
 func StringPtr(s string) *string {
@@ -18,5 +21,9 @@ func Float64Ptr(f float64) *float64 {
 }
 
 func TimePtr(t time.Time) *time.Time {
+	return &t
+}
+
+func DateTimePtr(t strfmt.DateTime) *strfmt.DateTime {
 	return &t
 }
