@@ -27,3 +27,10 @@ func TimePtr(t time.Time) *time.Time {
 func DateTimePtr(t strfmt.DateTime) *strfmt.DateTime {
 	return &t
 }
+
+func DateTimePtrFromTimePtr(t *time.Time) *strfmt.DateTime {
+	if t == nil {
+		return nil
+	}
+	return DateTimePtr(strfmt.DateTime(*t))
+}
