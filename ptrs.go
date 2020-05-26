@@ -1,5 +1,7 @@
 package util
 
+import "time"
+
 // StringPtr return pointer to string s
 func StringPtr(s string) *string {
 	return &s
@@ -13,4 +15,8 @@ func Int64Ptr(i int64) *int64 {
 // Float64Ptr return pointer to int64 d
 func Float64Ptr(f float64) *float64 {
 	return &f
+}
+
+func TimePtr(t time.Time) *time.Time {
+	return &t
 }
