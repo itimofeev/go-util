@@ -65,6 +65,10 @@ func NewForbiddenError(description string) *HTTPError {
 	return NewHTTPError(http.StatusForbidden, description)
 }
 
+func NewUnauthorizedError(description string) *HTTPError {
+	return NewHTTPError(http.StatusUnauthorized, description)
+}
+
 func NewBadRequestError(description string) *HTTPError {
 	return NewHTTPError(http.StatusBadRequest, description)
 }
