@@ -40,14 +40,21 @@ type Middleware struct {
 	excludeURLs []string
 }
 
-// NewDefaultMiddleware returns a new *Middleware which writes to a given logrus addedLogs.
-func NewDefaultMiddleware(logger logrus.FieldLogger, requestIDContextKey string) func(handler http.Handler) http.Handler {
-	mw := &Middleware{
+const defaultRequestIDContextKey = "XRequestIDKey"
+
+func NewMiddleware(logger logrus.FieldLogger) *Middleware {
+	return &Middleware{
 		Logger:              logger,
-		requestIDContextKey: requestIDContextKey,
+		requestIDContextKey: defaultRequestIDContextKey,
 		logStarting:         true,
 		clock:               &realClock{},
 	}
+}
+
+// NewDefaultMiddleware returns a new *Middleware which writes to a given logrus addedLogs.
+func NewDefaultMiddleware(logger logrus.FieldLogger, requestIDContextKey string) func(handler http.Handler) http.Handler {
+	mw := NewMiddleware(logger)
+	mw.requestIDContextKey = requestIDContextKey
 
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
