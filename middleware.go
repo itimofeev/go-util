@@ -56,9 +56,13 @@ func NewDefaultMiddleware(logger logrus.FieldLogger, requestIDContextKey string)
 	mw := NewMiddleware(logger)
 	mw.requestIDContextKey = requestIDContextKey
 
+	return mw.Handler()
+}
+
+func (m *Middleware) Handler() func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			mw.ServeHTTP(w, r, next.ServeHTTP)
+			m.ServeHTTP(w, r, next.ServeHTTP)
 		})
 	}
 }
