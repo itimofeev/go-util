@@ -25,6 +25,18 @@ func LogWithError(log logrus.FieldLogger, err error, msg string) {
 	log.Debug(msg)
 }
 
+func DebugWithError(log logrus.FieldLogger, err error, msg string) {
+	LogWithError(log, err, msg)
+}
+
+func InfoWithError(log logrus.FieldLogger, err error, msg string) {
+	if err != nil {
+		log.WithError(err).Error(msg)
+		return
+	}
+	log.Info(msg)
+}
+
 // LogStartStop logs start and finish of application
 // correct way to call is the following:
 //
