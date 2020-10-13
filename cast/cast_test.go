@@ -601,6 +601,24 @@ func Test_TryDate(t *testing.T) {
 	require.Error(t, err)
 }
 
+func Test_TryJSON(t *testing.T) {
+	expected, err := TryJSON("expected")
+	require.NoError(t, err)
+	require.Equal(t, "expected", expected)
+
+	expected, err = TryJSON([]byte("expected"))
+	require.NoError(t, err)
+	require.Equal(t, "expected", expected)
+
+	expected, err = TryJSON(struct{}{})
+	require.NoError(t, err)
+	require.Equal(t, "{}", expected)
+
+	expected, err = TryJSON(map[string]interface{}{"a": 1})
+	require.NoError(t, err)
+	require.Equal(t, `{"a":1}`, expected)
+}
+
 func testTryUInt8Err(t *testing.T, in ...interface{}) {
 	for _, inVal := range in {
 		_, err := TryUInt8(inVal)

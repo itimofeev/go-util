@@ -1,6 +1,7 @@
 package cast
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"math"
@@ -707,6 +708,20 @@ func TryUUID(value interface{}) (string, error) {
 	}
 
 	return uuidStr, nil
+}
+
+func TryJSON(value interface{}) (string, error) {
+	value = indirectToStringerOrError(value)
+
+	switch s := value.(type) {
+	case string:
+		return s, nil
+	case []byte:
+		return string(s), nil
+	default:
+		bytes, err := json.Marshal(value)
+		return string(bytes), err
+	}
 }
 
 // From html/template/content.go
